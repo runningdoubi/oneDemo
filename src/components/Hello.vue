@@ -1,53 +1,199 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div class="main-wrapper">
+        <el-row :gutter="20">
+            <el-col :span="12">
+                <div class="grid-content">
+                    <el-select size="large" v-model="selectedCity" filterable placeholder="医院地区">
+                        <el-option v-for="item in citys" :key="item" :label="item" :value="item"></el-option>
+                    </el-select>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="grid-content">
+                    <el-select size="large" v-model="selectedLevel" filterable placeholder="医院等级">
+                        <el-option v-for="item in levels" :key="item" :label="item" :value="item"></el-option>
+                    </el-select>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :span="24">
+                <div class="grid-content">
+                    <el-input size='large' placeholder="输入医院名称快速搜索" icon="search" v-model="selectedHosName" :on-icon-click="searchHos">
+                    </el-input>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="24">
+                <div class="help">
+                    <span>帮助中心</span>
+                    <span><i class="el-icon-information"></i>如何使用微信预约</span>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="24">
+                <ul>
+                    <li class="hospital-item" v-for="item in hospitals">
+                        <div class="hop-img">
+                            <img :src="item.hospImage" width="110" height="80" alt="">
+                        </div>
+                        <div class="hop-content">
+                            <h4 v-text="item.hospName"></h4>
+                            <div class="hos-content-more clearfix">
+                                <div class="level-distance">
+                                    <span class="level" v-text="item.level"></span>
+                                    <span class="distance"><i class="fa fa-map-marker"></i>{{item.distance}}</span>
+                                </div>
+                                <div class="test-btn">
+                                    <el-button size="small" type="success">预约检查</el-button>
+                                </div>
+                            </div>
+                            <div class="labels clearfix">
+                                <el-tag color="transparent" class="tag" type="gray" v-for="label in item.labels">{{label}}</el-tag>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </el-col>
+        </el-row>
+    </div>
 </template>
-
 <script>
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+const STATUS_NO = 0;
+//数组去重
+Array.prototype.unique = function() {
+    var arr = [];
+    var obj = {};
+    for (var i = 0; i < this.length; i++) {
+        if (!obj[this[i]]) {
+            arr.push(this[i]);
+            obj[this[i]] = 1;
+        }
     }
-  }
+    return arr;
+};
+
+export default {
+    data() {
+            return {
+                hospitals: [],
+                citys: ['全部地区'],
+                levels: ['全部等级'],
+                selectedCity: '',
+                selectedLevel: '',
+                selectedHosName: ''
+            }
+        },
+        created() {
+            this.axios.get('/api/hosData').then((res) => {
+                if (res.data.statusNo == STATUS_NO) {
+                    this.hospitals = res.data.data;
+                };
+                this.hospitals.forEach((item, index) => {
+                    this.citys.push(item.provinceName);
+                    this.levels.push(item.level);
+                });
+                this.citys = this.citys.unique();
+                this.levels = this.levels.unique();
+            })
+        },
+        methods: {
+            searchHos() {
+
+            }
+        }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.el-row {
+    margin-bottom: 20px;
+}
+
+.el-row:last-child {
+    margin-bottom: 0;
+}
+
+.help {
+    text-align: left;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
+ul li {
+    list-style: none;
 }
 
-a {
-  color: #42b983;
+h4 {
+    margin: 0;
+}
+
+.hospital-item {
+    display: flex;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid rgba(175,175,175,.15);
+}
+
+.hospital-item:last-child {
+    border-bottom: 1px solid rgba(175,175,175,.15);
+    margin-bottom: 0;
+}
+
+.hop-img {
+    flex: 0 0 110px;
+    width: 110px;
+    height: 80px;
+    overflow: hidden;
+    margin-right: 10px;
+    border-radius: 7px;
+}
+
+.hop-content {
+    flex: 1;
+    text-align: left;
+}
+
+.hop-content .level-distance,
+.hop-content .test-btn {
+    display: inline-block;
+}
+
+.hop-content .test-btn {
+    float: right;
+}
+
+.hos-content-more {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 28px;
+}
+.hos-content-more .level{
+  margin-right: 18px;
+  
+}
+.hos-content-more .distance{
+  color: rgba(51,51,51,.5);
+}
+.labels .tag{
+  border-radius: 15px;
+}
+.labels .tag + .tag{
+  margin-left:5px;
 }
 </style>

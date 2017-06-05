@@ -33,6 +33,8 @@ apiRoutes.get("/hosData",function(req,res){
   });
 });
 app.use("/api",apiRoutes);
+//进行本地开发时一定要写这个，不然路径报错
+app.use('/assets',express.static('./src/assets'));
 
 var compiler = webpack(webpackConfig)
 
