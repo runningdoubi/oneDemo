@@ -3,14 +3,14 @@
         <el-row :gutter="20">
             <el-col :span="12">
                 <div class="grid-content">
-                    <el-select size="large" v-model="selectedCity" filterable placeholder="医院地区">
+                    <el-select size="large" v-model="selectedCity" filterable placeholder="医院地区" @change="selectHos">
                         <el-option v-for="item in citys" :key="item" :label="item" :value="item"></el-option>
                     </el-select>
                 </div>
             </el-col>
             <el-col :span="12">
                 <div class="grid-content">
-                    <el-select size="large" v-model="selectedLevel" filterable placeholder="医院等级">
+                    <el-select size="large" v-model="selectedLevel" filterable placeholder="医院等级" @change="selectHos">
                         <el-option v-for="item in levels" :key="item" :label="item" :value="item"></el-option>
                     </el-select>
                 </div>
@@ -19,7 +19,7 @@
         <el-row :gutter="20">
             <el-col :span="24">
                 <div class="grid-content">
-                    <el-input size='large' placeholder="输入医院名称快速搜索" icon="search" v-model="selectedHosName" :on-icon-click="searchHos">
+                    <el-input size='large' placeholder="输入医院名称快速搜索" icon="search" v-model="selectedHosName" :on-icon-click="searchHosByName">
                     </el-input>
                 </div>
             </el-col>
@@ -56,6 +56,7 @@
                         </div>
                     </li>
                 </ul>
+                <div class="no-result" v-show="noResultFlag">没有查询结果</div>
             </el-col>
         </el-row>
     </div>
@@ -79,17 +80,20 @@ export default {
     data() {
             return {
                 hospitals: [],
+                allHospitals: [],
                 citys: ['全部地区'],
                 levels: ['全部等级'],
                 selectedCity: '',
                 selectedLevel: '',
-                selectedHosName: ''
+                selectedHosName: '',
+                noResultFlag: false
             }
         },
         created() {
             this.axios.get('/api/hosData').then((res) => {
                 if (res.data.statusNo == STATUS_NO) {
                     this.hospitals = res.data.data;
+                    this.allHospitals = res.data.data;
                 };
                 this.hospitals.forEach((item, index) => {
                     this.citys.push(item.provinceName);
@@ -100,8 +104,49 @@ export default {
             })
         },
         methods: {
-            searchHos() {
-
+            selectHos() {
+                let newHospital = [];
+                if ((this.selectedCity == '全部地区' || this.selectedCity == '') && (this.selectedLevel == '全部等级' || this.selectedLevel == '')) {
+                    this.hospitals = this.allHospitals;
+                } else if ((this.selectedCity != '全部地区' || this.selectedCity != '') && (this.selectedLevel == '全部等级' || this.selectedLevel == '')) {
+                    this.allHospitals.forEach((item, index) => {
+                        if (item.provinceName == this.selectedCity) {
+                            newHospital.push(item);
+                            return false;
+                        };
+                    });
+                    this.hospitals = newHospital;
+                } else if ((this.selectedCity == '全部地区' || this.selectedCity == '') && (this.selectedLevel != '全部等级' || this.selectedLevel != '')) {
+                    this.allHospitals.forEach((item, index) => {
+                        if (item.level == this.selectedLevel) {
+                            newHospital.push(item);
+                            return false;
+                        };
+                    });
+                    this.hospitals = newHospital;
+                } else {
+                    this.allHospitals.forEach((item, index) => {
+                        if (item.provinceName == this.selectedCity && item.level == this.selectedLevel) {
+                            newHospital.push(item);
+                            return false;
+                        };
+                    });
+                    this.hospitals = newHospital;
+                }
+            },
+            searchHosByName() {
+                let newHospital = [];
+                this.allHospitals.forEach((item, index) => {
+                    if (item.hospName.indexOf(this.selectedHosName) != -1) {
+                        newHospital.push(item);
+                    };
+                });
+                this.hospitals = newHospital;
+                if (newHospital.length > 0) {
+                    this.noResultFlag = false;
+                } else {
+                    this.noResultFlag = true;
+                };
             }
         }
 }
@@ -147,11 +192,11 @@ h4 {
     display: flex;
     padding-top: 15px;
     padding-bottom: 15px;
-    border-top: 1px solid rgba(175,175,175,.15);
+    border-top: 1px solid rgba(175, 175, 175, .15);
 }
 
 .hospital-item:last-child {
-    border-bottom: 1px solid rgba(175,175,175,.15);
+    border-bottom: 1px solid rgba(175, 175, 175, .15);
     margin-bottom: 0;
 }
 
@@ -183,17 +228,20 @@ h4 {
     font-size: 12px;
     line-height: 28px;
 }
-.hos-content-more .level{
-  margin-right: 18px;
-  
+
+.hos-content-more .level {
+    margin-right: 18px;
 }
-.hos-content-more .distance{
-  color: rgba(51,51,51,.5);
+
+.hos-content-more .distance {
+    color: rgba(51, 51, 51, .5);
 }
-.labels .tag{
-  border-radius: 15px;
+
+.labels .tag {
+    border-radius: 15px;
 }
-.labels .tag + .tag{
-  margin-left:5px;
+
+.labels .tag + .tag {
+    margin-left: 5px;
 }
 </style>
