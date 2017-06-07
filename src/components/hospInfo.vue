@@ -20,25 +20,27 @@
                 </el-row>
                 <el-row class="hospIntro-wrapper">
                     <el-col :span="24">
-                        <p class="hospIntro">{{hospitalInfo.hospIntro}}</p>
+                        <router-link :to="{name:'hospDesc',params:{'hospItem':hospitalInfo}}" class="hospIntro" tag="p">
+                            {{hospitalInfo.hospIntro}}
+                        </router-link>
                     </el-col>
                 </el-row>
             </div>
         </div>
         <split :height="15"></split>
         <div class="content-bottom">
-            <div class="item no-bl">
+            <router-link :to="{name:'hospDesc',params:{'hospItem':hospitalInfo}}" class="item no-bl" tag="div">
                 <div class="item-logo">
                     <img class="logo-img" src="../assets/img/图片2_09.gif" alt="">
                 </div>
                 <span class="item-font">医院介绍</span>
-            </div>
-            <div class="item">
+            </router-link>
+            <router-link :to="{name:'breastDesc',params:{'hospItem':hospitalInfo}}" class="item" tag="div">
                 <div class="item-logo">
                     <img class="logo-img" src="../assets/img/图片2_11.gif" alt="">
                 </div>
                 <span class="item-font">乳腺筛查中心介绍</span>
-            </div>
+            </router-link>
             <div class="item">
                 <div class="item-logo">
                     <img class="logo-img" src="../assets/img/图片2_13.gif" alt="">
@@ -79,7 +81,6 @@ export default {
             split
         },
         mounted() {
-            
             if (this.$route.params.hospItem == undefined) {
                 this.hospitalInfo = JSON.parse(sessionStorage.getItem("HOSPITAL_INFO"));
             } else {
@@ -139,10 +140,10 @@ export default {
 
 .hospIntro-wrapper .hospIntro {
     /* position:relative;
-	    line-height:1.4em;
-	    3 times the line-height to show 3 lines
-	    height:2.8em;
-	    overflow:hidden; */
+        line-height:1.4em;
+        3 times the line-height to show 3 lines
+        height:2.8em;
+        overflow:hidden; */
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -20,7 +20,7 @@
             <el-row :gutter="20">
                 <el-col :span="24">
                     <div class="grid-content">
-                        <el-input size='large' placeholder="输入医院名称快速搜索" icon="search" v-model="selectedHosName" :on-icon-click="searchHosByName">
+                        <el-input size='large' placeholder="输入医院名称快速搜索" icon="search" @change="searchHosByName" v-model="selectedHosName" :on-icon-click="searchHosByName">
                         </el-input>
                     </div>
                 </el-col>
