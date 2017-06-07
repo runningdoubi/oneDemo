@@ -68,6 +68,9 @@
     </div>
 </template>
 <script>
+//本地引用json
+import Data from '../../data.json';
+
 const STATUS_NO = 0;
 //数组去重
 Array.prototype.unique = function() {
