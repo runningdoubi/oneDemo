@@ -7,6 +7,7 @@ import hospDesc from '@/components/hospDesc'
 import breastDesc from '@/components/breastDesc'
 import doIt from '@/components/doIt'
 import testPhone from '@/components/testPhone'
+import subjectItem from '@/components/subjectItem'
 
 Vue.use(Router)
 
@@ -43,5 +44,10 @@ export default new Router({
         path: '/testPhone',
         name: 'testPhone',
         component: testPhone
+    },
+    {
+        path: '/subjectItem',
+        name: 'subjectItem',
+        component: subjectItem
     }]
 })
