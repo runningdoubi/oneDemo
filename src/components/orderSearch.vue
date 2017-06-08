@@ -62,7 +62,7 @@
     </div>
 </template>
 <script type="text/javascript">
-import constant from '../assets/js/constant'
+import constant from '../../static/js/constant'
 
 const years = constant.years;
 const months = constant.months;

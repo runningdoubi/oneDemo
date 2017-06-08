@@ -31,37 +31,37 @@
         <div class="content-bottom">
             <router-link :to="{name:'hospDesc',params:{'hospItem':hospitalInfo}}" class="item no-bl" tag="div">
                 <div class="item-logo">
-                    <img class="logo-img" src="../assets/img/图片2_09.gif" alt="">
+                    <img class="logo-img" src="../../static/img/图片2_09.gif" alt="">
                 </div>
                 <span class="item-font">医院介绍</span>
             </router-link>
             <router-link :to="{name:'breastDesc',params:{'hospItem':hospitalInfo}}" class="item" tag="div">
                 <div class="item-logo">
-                    <img class="logo-img" src="../assets/img/图片2_11.gif" alt="">
+                    <img class="logo-img" src="../../static/img/图片2_11.gif" alt="">
                 </div>
                 <span class="item-font">乳腺筛查中心介绍</span>
             </router-link>
             <div class="item">
                 <div class="item-logo">
-                    <img class="logo-img" src="../assets/img/图片2_13.gif" alt="">
+                    <img class="logo-img" src="../../static/img/图片2_13.gif" alt="">
                 </div>
                 <span class="item-font">乳腺外科介绍</span>
             </div>
             <div class="item no-bl no-bb">
                 <div class="item-logo">
-                    <img class="logo-img" src="../assets/img/图片2_18.gif" alt="">
+                    <img class="logo-img" src="../../static/img/图片2_18.gif" alt="">
                 </div>
                 <span class="item-font">就诊流程</span>
             </div>
             <div class="item no-bb">
                 <div class="item-logo">
-                    <img class="logo-img" src="../assets/img/图片2_19.gif" alt="">
+                    <img class="logo-img" src="../../static/img/图片2_19.gif" alt="">
                 </div>
                 <span class="item-font">就诊注意事项</span>
             </div>
             <router-link to="/orderSearch" class="item no-bb" tag="div">
                 <div class="item-logo">
-                    <img class="logo-img" src="../assets/img/图片2_20.gif" alt="">
+                    <img class="logo-img" src="../../static/img/图片2_20.gif" alt="">
                 </div>
                 <span class="item-font">预约检查</span>
             </router-link>

@@ -162,4 +162,4 @@ const payOptions = [{
     'label': '到院支付'
 }]
 
-export default {years,months,dates,testOptions,payOptions}
+export default {years:years,months:months,dates:dates,testOptions:testOptions,payOptions:payOptions};

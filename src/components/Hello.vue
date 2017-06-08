@@ -88,8 +88,8 @@ Array.prototype.unique = function() {
 export default {
     data() {
             return {
-                hospitals: [],
-                allHospitals: [],
+                hospitals: Data,
+                allHospitals: Data,
                 citys: ['全部地区'],
                 levels: ['全部等级'],
                 selectedCity: '',
@@ -99,7 +99,7 @@ export default {
             }
         },
         created() {
-            this.axios.get('/api/hosData').then((res) => {
+            /*this.axios.get('/api/hosData').then((res) => {
                 if (res.data.statusNo == STATUS_NO) {
                     this.hospitals = res.data.data;
                     this.allHospitals = res.data.data;
@@ -110,7 +110,13 @@ export default {
                 });
                 this.citys = this.citys.unique();
                 this.levels = this.levels.unique();
-            })
+            });*/
+            this.hospitals.forEach((item, index) => {
+                this.citys.push(item.provinceName);
+                this.levels.push(item.level);
+            });
+            this.citys = this.citys.unique();
+            this.levels = this.levels.unique();
         },
         methods: {
             selectHos() {

@@ -24,7 +24,7 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 //模拟数据接口
-var appData = require("../data.json");
+/*var appData = require("../data.json");
 var apiRoutes = express.Router();
 apiRoutes.get("/hosData",function(req,res){
   res.json({
@@ -32,9 +32,9 @@ apiRoutes.get("/hosData",function(req,res){
     data:appData
   });
 });
-app.use("/api",apiRoutes);
+app.use("/api",apiRoutes);*/
 //进行本地开发时一定要写这个，不然路径报错
-app.use('/assets',express.static('./src/assets'));
+//app.use('/assets',express.static('./src/assets'));
 
 var compiler = webpack(webpackConfig)
 
