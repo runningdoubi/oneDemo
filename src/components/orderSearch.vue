@@ -1,8 +1,9 @@
 <template>
     <div class="main-wrapper">
         <div class="tab">
-            <div class="tab-item" :class="{'tab-active':timeActiveFlag}" @click="timeActive">时间</div>
-            <div class="tab-item" :class="{'tab-active':historyActiveFlag}">历史</div>
+            <!-- <div class="tab-item" :class="{'tab-active':timeActiveFlag}" @click="timeActive">时间</div>
+            <div class="tab-item" :class="{'tab-active':historyActiveFlag}">历史</div> -->
+            <h3>预约检查</h3>
         </div>
         <div class="select-wrapper">
             <div class="time-wrapper">
@@ -56,9 +57,9 @@
                 </div>
             </div>
         </div>
-        <div class="submit-wrapper">
+        <router-link to="/doIt" tag="div" class="submit-wrapper">
             <el-button class="btn-item" type="primary" size="large">下一步</el-button>
-        </div>
+        </router-link>
     </div>
 </template>
 <script type="text/javascript">
@@ -80,10 +81,10 @@ export default {
                 timeActiveFlag: true,
                 historyActiveFlag: false,
                 years: years,
-                months:months,
-                dates:dates,
-                testOptions:testOptions,
-                payOptions:payOptions,
+                months: months,
+                dates: dates,
+                testOptions: testOptions,
+                payOptions: payOptions,
                 year: nowYear,
                 month: nowMonth,
                 date: nowDay,
@@ -121,6 +122,7 @@ export default {
 
 .main-wrapper .tab {
     display: flex;
+    justify-content: center;
     margin: 0 -8px 0 -8px;
 }
 
