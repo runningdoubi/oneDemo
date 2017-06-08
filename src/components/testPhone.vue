@@ -1,7 +1,7 @@
 <template>
     <div class="main-wrapper">
         <div class="img-wrapper">
-            <img src="../../static/img/手机号验证_02.png" height="100%" width="100%" alt="">
+            <img src="../../static/img/手机号验证_02.jpg" height="100%" width="100%" alt="">
             <router-link to="/doIt" class="hot-space" tag="div"></router-link>
         </div>
     </div>

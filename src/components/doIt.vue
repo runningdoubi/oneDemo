@@ -4,7 +4,7 @@
             <h3>完善病历卡</h3>
         </div>
         <div class="img-wrapper">
-            <img src="../../static/img/完善病历卡_02.png" height="100%" width="100%" alt="">
+            <img src="../../static/img/完善病历卡_02.jpg" height="100%" width="100%" alt="">
             <router-link to="/testPhone" class="hot-space-one" tag="div"></router-link>
             <router-link to="/subjectItem" class="hot-space-two" tag="div"></router-link>
         </div>
