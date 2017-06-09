@@ -171,6 +171,7 @@ export default {
 }
 
 .content-bottom .item {
+    box-sizing: border-box;
     width: 30%;
     height: 100px;
     padding: 5px;
@@ -191,5 +192,8 @@ export default {
 .content-bottom .item .logo-img {
     width: 50px;
     height: 50px;
+}
+.content-bottom .item .item-font{
+    white-space: normal;
 }
 </style>
